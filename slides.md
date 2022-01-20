@@ -106,17 +106,30 @@ https://www.morphos-team.net/guide/usb-boot)
 
 see also [https://www.youtube.com/watch?v=u9OMOHl73IE](https://www.youtube.com/watch?v=u9OMOHl73IE)
 
+## Visual BIOS[^8]
+
+![Visual BIOS](img/visual-bios.png){ height=86% }
+
+[^8]: [https://twitter.com/DevrajJoshi/status/301710041109639169](
+https://twitter.com/DevrajJoshi/status/301710041109639169)
+
 # Modern Firmware Interfaces
 
 ## NUI vs TUI vs GUI
+
+. . .
 
 ### NUI
 
 No user interface - this applies to embedded devices mostly, where interactive access is not necessary.
 
+. . .
+
 ### TUI
 
 Textual user interface - this is available even in non-graphical environments, such as via serial console.
+
+. . .
 
 ### GUI
 
@@ -124,11 +137,15 @@ Graphical user interface - this is most suitable for end users, can support acce
 
 ## Open Source Implementations
 
+. . .
+
 ### coreboot
 
 - `nvramtool` (for OS), nvramcui (payload)[^4]
 - coreinfo (payload)
 - corevantage, coreboot-configurator (GUIs)
+
+. . .
 
 ### LinuxBoot
 
@@ -136,9 +153,13 @@ Graphical user interface - this is most suitable for end users, can support acce
 - Heads
 - `webboot` and `boot` menu (TUI)
 
+. . .
+
 ### U-Boot
 
 - interactive command interface
+
+. . .
 
 ### Tianocore / EDK2
 
@@ -173,6 +194,10 @@ The UI has clickable elements, but mostly, simple text.
 - boot media / source, order, default
 - Secure Boot key provisioning
 
+. . .
+
+Note: screenshot taken from within the UI, stored to USB drive
+
 ## EFI variables
 
 ```
@@ -187,6 +212,10 @@ $ xxd /sys/firmware/efi/efivars/SMBIOSELOG000-c3eeae98-23bf-412b-*
 00000070: 0000 0000 0890 1901 0100 0042 0002 0000 ...........B....
 00000080: 0000 0000 0890 2006 2808 3720 0002 0000 ...... .(.7 ....
 ```
+
+. . .
+
+Can we create or do we have a parser and a viewer for this?
 
 ## coreboot `nvramtool`
 
@@ -207,6 +236,10 @@ coreboot table at physical address 0x76b42000:
         data:
 ...
 ```
+
+. . .
+
+Could this be more intuitive?
 
 ## Star Labs coreboot-configurator
 
@@ -241,6 +274,33 @@ Render an image around the TUI, possibly like [`fbcondecor`](https://github.com/
 :::
 ::::::::::::::
 
+## Simulator[^6]
+
+![clickBIOS](img/clickbios.png){ height=80% }
+
+[^6]: [https://www.thomas-krenn.com/de/wikiDE/imagemaps/html/mainboards/asus_z9pr-d12_4l/pcie_slot_option_rom_configuration.php](
+https://www.thomas-krenn.com/de/wikiDE/imagemaps/html/mainboards/asus_z9pr-d12_4l/pcie_slot_option_rom_configuration.php)
+
+## User Experience (UX)[^3]
+
+. . .
+
+> Encourage a “walk up and use” (WUU) user interface. Most applications are designed to be
+> used repeatedly. User interface designers must trade off learnability for usability. The goal of
+> WUU applications is to be instantly usable without a learning curve or other documentation.
+
+. . .
+
+> Design characteristics include the following:
+
+  - A simplified interface.
+  - Continual display of both keys and context-sensitive help, rather than having the user
+    ask for it.
+  - Minimal shortcuts (most people become confused by more than one method for
+    doing things).
+  - An interface that is analogous to a common interface. At this time, a generic web browser
+    is probably the most universal nonproprietary interface.
+
 ## UEFI Configuration Namespace[^5]
 
 :::::::::::::: {.columns}
@@ -251,8 +311,9 @@ Render an image around the TUI, possibly like [`fbcondecor`](https://github.com/
 ### Approach
 
 - Form {Builder, Generator}
-- schema defined by spec
+- schemas defined by spec
 - can be implemented in [Fiedka](https://fiedka.app/)
+- Fiedka is based on Electron, i.e., a web browser with OS interfacing
 
 ![Fiedka logo](img/fiedka.png){ height=30% }
 :::
@@ -260,14 +321,15 @@ Render an image around the TUI, possibly like [`fbcondecor`](https://github.com/
 
 [^5]: [https://uefi.org/namespace_instructions](https://uefi.org/namespace_instructions)
 
-## Simulator[^6]
+## Notes on Security and Safety
 
-![clickBIOS](img/clickbios.png){ height=80% }
+. . .
 
-[^6]: [https://www.thomas-krenn.com/de/wikiDE/imagemaps/html/mainboards/asus_z9pr-d12_4l/pcie_slot_option_rom_configuration.php](
-https://www.thomas-krenn.com/de/wikiDE/imagemaps/html/mainboards/asus_z9pr-d12_4l/pcie_slot_option_rom_configuration.php)
+### Principle of Least Privilege (PoLP)
 
-## Notes
+Interfaces should guard from full access.
+
+Restricted access prevents accidents and compromise.
 
 . . .
 
@@ -279,11 +341,15 @@ Input _must_ be validated.
 
 Define fallbacks for resilience.
 
-. . .
-
-### Awareness
+## Awareness
 
 > Remember: User interfaces are critical!
+
+. . .
+
+Pick a user interface that fits the need, even if it seems old-fashioned.
+
+![Manual operation](https://news.usni.org/wp-content/uploads/2019/08/5623980.jpg){ height=70% }
 
 # Thanks!
 
