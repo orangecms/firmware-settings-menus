@@ -5,10 +5,10 @@ title: Firmware Settings and Menus
 
 ## Agenda
 
+- Introduction
 - History
-- Modern Firmware Menus
-- Ideas for Desktop
-- Ideas for Boot Menu
+- Modern Firmware Interfaces
+- Ideas for Open Source Firmware
 
 # Introduction
 
@@ -34,6 +34,31 @@ title: Firmware Settings and Menus
 :::
 ::::::::::::::
 
+## Fiedka
+
+Fiedka is a graphical firmware editor app[^0].
+
+![Fiedka mascot logo](img/fiedka.png){ height=70% }
+
+[^0]: [https://fiedka.app/](https://fiedka.app/)
+
+## User interfaces are Critical[^7]
+
+![US Navy](img/us-navy-touchscreen.png){ height=80% }
+
+[^7]: [https://news.usni.org/2019/08/09/navy-reverting-ddgs-back-to-physical-throttles-after-fleet-rejects-touchscreen-controls](
+https://news.usni.org/2019/08/09/navy-reverting-ddgs-back-to-physical-throttles-after-fleet-rejects-touchscreen-controls)
+
+## User Interface Design
+
+:::::::::::::: {.columns}
+::: {.column width="93%"}
+![UI Design](img/us-navy-gui-design.png)
+:::
+::: {.column width="7%"}
+:::
+::::::::::::::
+
 # History
 
 ## Early Firmware and Interfaces
@@ -47,10 +72,17 @@ title: Firmware Settings and Menus
 
 . . .
 
-### Open Firmware
+### Open Firmware (IEEE 1275)
 
 - first non-proprietary boot firmware for different processors and buses[^2]
-- shell UI based on Forth
+- Forth interpreter as UI
+
+. . .
+
+### EFI
+
+- Human Interface Infrastructure (HII)[^3]
+- standardized protocol and data structures for building forms
 
 [^1]: [https://historyofinformation.com/detail.php?entryid=3846](
 https://historyofinformation.com/detail.php?entryid=3846)
@@ -58,27 +90,62 @@ https://historyofinformation.com/detail.php?entryid=3846)
 [^2]: [http://www.firmworks.com/www/ofw.htm](
 http://www.firmworks.com/www/ofw.htm)
 
+[^3]: [https://www.intel.com/content/dam/www/public/us/en/documents/reference-guides/efi-human-interface-infrastructure-specification-v09.pdf](
+https://www.intel.com/content/dam/www/public/us/en/documents/reference-guides/efi-human-interface-infrastructure-specification-v09.pdf)
+
 ## Open Firmware Interfaces
 
 ![](http://www.firmworks.com/www/blkdiag1.gif)
 
-# Modern Firmware Menus
+## Open Firmware Interactive Environment
 
-## TUI vs GUI vs NUI
+![Open Firmware on Power PC](img/open-firmware-ppc.png)
+
+image originally from [https://www.morphos-team.net/guide/usb-boot](
+https://www.morphos-team.net/guide/usb-boot)
+
+see also [https://www.youtube.com/watch?v=u9OMOHl73IE](https://www.youtube.com/watch?v=u9OMOHl73IE)
+
+# Modern Firmware Interfaces
+
+## NUI vs TUI vs GUI
+
+### NUI
+
+No user interface - this applies to embedded devices mostly, where interactive access is not necessary.
+
+### TUI
+
+Textual user interface - this is available even in non-graphical environments, such as via serial console.
+
+### GUI
+
+Graphical user interface - this is most suitable for end users, can support accessibility.
 
 ## Open Source Implementations
 
 ### coreboot
 
-- firmware setup menu
-
-https://zirblazer.github.io/htmlfiles/coreboot.html?ver=123#chapter-3
+- `nvramtool` (for OS), nvramcui (payload)[^4]
+- coreinfo (payload)
+- corevantage, coreboot-configurator (GUIs)
 
 ### LinuxBoot
 
+- shell
 - Heads
-- `webboot` menu
-- `boot` menu
+- `webboot` and `boot` menu (TUI)
+
+### U-Boot
+
+- interactive command interface
+
+### Tianocore / EDK2
+
+- UEFI Shell
+- interactive menu (TUI)
+
+[^4]: https://zirblazer.github.io/htmlfiles/coreboot.html?ver=123#chapter-3
 
 ## Graphical Firmware User Interfaces
 
@@ -106,52 +173,118 @@ The UI has clickable elements, but mostly, simple text.
 - boot media / source, order, default
 - Secure Boot key provisioning
 
-# Ideas ...
+## EFI variables
 
-## Foo
+```
+$ xxd /sys/firmware/efi/efivars/SMBIOSELOG000-c3eeae98-23bf-412b-*
+00000000: 0700 0000 0000 0000 0060 0160 0000 0000 .........`.`....
+00000010: 0000 0001 0890 1901 0100 0108 0002 0000 ................
+00000020: 0000 0000 0890 1901 0100 0118 0002 0000 ................
+00000030: 0000 0000 0890 1901 0100 0236 0002 0000 ...........6....
+00000040: 0000 0000 0890 1901 0100 0302 0002 0000 ................
+00000050: 0000 0000 0890 1901 0100 0035 0010 0000 ...........5....
+00000060: 0000 0000 0890 1901 0100 0035 0002 0000 ...........5....
+00000070: 0000 0000 0890 1901 0100 0042 0002 0000 ...........B....
+00000080: 0000 0000 0890 2006 2808 3720 0002 0000 ...... .(.7 ....
+```
 
-https://www.thomas-krenn.com/de/wikiDE/imagemaps/html/mainboards/asus_z9pr-d12_4l/pcie_slot_option_rom_configuration.php
+## coreboot `nvramtool`
 
-## Network Video Recorders (NVRs)
+### dump coreboot tables: `nvramtool -d`
+
+```
+coreboot table at physical address 0x76b42000:
+    signature:       0x4f49424c (ASCII: LBIO)
+    header_bytes:    0x18 (decimal: 24)
+    header_checksum: 0x4d99 (decimal: 19865)
+    table_bytes:     0x7d4 (decimal: 2004)
+    table_checksum:  0x18b9 (decimal: 6329)
+    table_entries:   0x2c (decimal: 44)
+
+    CMOS_OPTION_TABLE record at physical address 0x76b42018:
+        tag:  0xc8 (decimal: 200)
+        size: 0x294 (decimal: 660)
+        data:
+...
+```
+
+## Star Labs coreboot-configurator
+
+strongly inspired by or reworked copy of [corevantage](https://github.com/JaGoLi/corevantage) invoking `nvramtool`
+
+![coreboot-configurator](https://github.com/StarLabsLtd/coreboot-configurator/blob/main/images/coreboot-configurator.gif?raw=true){ height=70% }
+
+# Ideas for Open Source Firmware
+
+## LinuxBoot
+
+### Simple
+
+Add a splashscreen image, e.g., using the [`fbsplash`](
+https://github.com/u-root/u-root/tree/main/cmds/exp/fbsplash) command in u-root.
+
+. . .
+
+### Advanced
+
+Render an image around the TUI, possibly like [`fbcondecor`](https://github.com/jirka-grunt/fbcondecor).
+
+![fbcondevor](https://wiki.gentoo.org/images/thumb/7/7c/Bootsplash.png/1024px-Bootsplash.png){ height=65% }
+
+## Back to HII...
 
 :::::::::::::: {.columns}
-::: {.column width="52%"}
-![NVR box wired up](img/nvr-box-wired.jpeg){ height=80% }
+::: {.column width="93%"}
+![EFI HII IFR to HTML](img/efi-hii-ifr-html.png)
 :::
-::: {.column width="48%"}
-### old ideas
-- essentially storage with more connectors
-  * USB, HDMI, ethernet
-  * built-in network switch
-  * analog video input
-- SoC, mostly Arm, running Linux
-
-### new ideas
-- little general purpose computer with web browser
-- home theatre / movie player
+::: {.column width="7%"}
 :::
 ::::::::::::::
 
-## IP cameras
-
-Essentially, these are just camera sensors attached to some SoC that is
-running Linux, with Wi-Fi and/or ethernet modules and often SD card
-readers.
+## UEFI Configuration Namespace[^5]
 
 :::::::::::::: {.columns}
-::: {.column width="40%"}
-![Robot IP cameras](img/robot-ip-cams.jpeg){ height=85% }
+::: {.column width="50%"}
+![UEFI Config Namespace Layering](https://uefi.org/sites/default/files/resources/Namespace%203.jpg)
 :::
-::: {.column width="30%"}
-![Astronaut IP camera](img/astronaut-ip-cam.jpeg){ height=85% }
-:::
-::: {.column width="30%"}
-![smaller IP camera](img/small-wifi-ip-cam.jpeg){ height=85% }
+::: {.column width="50%"}
+### Approach
+
+- Form {Builder, Generator}
+- schema defined by spec
+- can be implemented in [Fiedka](https://fiedka.app/)
+
+![Fiedka logo](img/fiedka.png){ height=30% }
 :::
 ::::::::::::::
 
-They typically feature two motors to rotate and tilt, sometimes a
-speaker and a microphone for two-way audio communication.
+[^5]: [https://uefi.org/namespace_instructions](https://uefi.org/namespace_instructions)
 
-OpenIPC project - [https://openipc.org/](https://openipc.org/)
+## Simulator[^6]
 
+![clickBIOS](img/clickbios.png){ height=80% }
+
+[^6]: [https://www.thomas-krenn.com/de/wikiDE/imagemaps/html/mainboards/asus_z9pr-d12_4l/pcie_slot_option_rom_configuration.php](
+https://www.thomas-krenn.com/de/wikiDE/imagemaps/html/mainboards/asus_z9pr-d12_4l/pcie_slot_option_rom_configuration.php)
+
+## Notes
+
+. . .
+
+### Robustness
+
+Configuration means (user) input.
+
+Input _must_ be validated.
+
+Define fallbacks for resilience.
+
+. . .
+
+### Awareness
+
+> Remember: User interfaces are critical!
+
+# Thanks!
+
+# Questions?
