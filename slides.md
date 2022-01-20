@@ -42,7 +42,7 @@ Fiedka is a graphical firmware editor app[^0].
 
 [^0]: [https://fiedka.app/](https://fiedka.app/)
 
-## User interfaces are Critical[^7]
+## User Interfaces are Critical[^7]
 
 ![US Navy](img/us-navy-touchscreen.png){ height=80% }
 
