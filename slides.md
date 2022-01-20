@@ -121,19 +121,19 @@ https://twitter.com/DevrajJoshi/status/301710041109639169)
 
 ### NUI
 
-No user interface - this applies to embedded devices mostly, where interactive access is not necessary.
+No user interface - applies to embedded devices mostly, where interactive access is not necessary.
 
 . . .
 
 ### TUI
 
-Textual user interface - this is available even in non-graphical environments, such as via serial console.
+Textual user interface - available even in non-graphical environments, such as via serial console.
 
 . . .
 
 ### GUI
 
-Graphical user interface - this is most suitable for end users, can support accessibility.
+Graphical user interface - most suitable for end users, can support accessibility.
 
 ## Open Source Implementations
 
