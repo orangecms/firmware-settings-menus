@@ -30,7 +30,7 @@ title: Firmware Settings and Menus
 - operating systems
 - software distributions
 - reverse engineering
-- author of [fiedka.app](https://fiedka.app/)
+- [Fiedka the Firmware Editor](https://fiedka.app/)
 :::
 ::::::::::::::
 
