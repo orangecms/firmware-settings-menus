@@ -164,7 +164,7 @@ Graphical user interface - most suitable for end users, can support accessibilit
 ### Tianocore / EDK2
 
 - UEFI Shell
-- interactive menu (TUI)
+- Setup Browser (interactive menu, TUI)
 
 [^4]: https://zirblazer.github.io/htmlfiles/coreboot.html?ver=123#chapter-3
 
@@ -247,6 +247,10 @@ strongly inspired by or reworked copy of [corevantage](https://github.com/JaGoLi
 
 ![coreboot-configurator](https://github.com/StarLabsLtd/coreboot-configurator/blob/main/images/coreboot-configurator.gif?raw=true){ height=70% }
 
+## System76 Firmware Info in Pop!\_OS
+
+![System76 Pop!\_OS Firmware Info](img/pop-os-fwinfo.png){ height=80% }
+
 # Ideas for Open Source Firmware
 
 ## LinuxBoot
@@ -273,6 +277,13 @@ Render an image around the TUI, possibly like [`fbcondecor`](https://github.com/
 ::: {.column width="7%"}
 :::
 ::::::::::::::
+
+## HII Concepts[^9]
+
+![HII Key Concepts](img/hii-concepts.png){ height=82% }
+
+[^9]: [https://uefi.org/sites/default/files/resources/UEFI_Plugfest_2011Q4_P4_Intel.pdf](
+https://uefi.org/sites/default/files/resources/UEFI_Plugfest_2011Q4_P4_Intel.pdf)
 
 ## Simulator[^6]
 
@@ -320,6 +331,12 @@ https://www.thomas-krenn.com/de/wikiDE/imagemaps/html/mainboards/asus_z9pr-d12_4
 ::::::::::::::
 
 [^5]: [https://uefi.org/namespace_instructions](https://uefi.org/namespace_instructions)
+
+## IPC and RPC
+
+We can build a local interface only, using IPC, or be more lax and provide a remote API for RPC.
+
+![OrangeWrt Web UI](img/openwrt-web-ui.png){ height=82% }
 
 ## Notes on Security and Safety
 
